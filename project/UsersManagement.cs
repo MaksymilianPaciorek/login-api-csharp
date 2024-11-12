@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UserApi.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace UserApi.Controllers
 {
@@ -19,18 +17,18 @@ namespace UserApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<IdentityUser>>> GetUsers()
         {
             var users = await _context.Users.ToListAsync();
             return Ok(users);
         }
 
         [HttpPost]
-        public async Task<ActionResult<User>> AddUser([FromBody] User user)
+        public async Task<ActionResult<IdentityUser>> AddUser([FromBody] IdentityUser user)
         {
-            if (user == null || string.IsNullOrWhiteSpace(user.Name))
+            if (user == null || string.IsNullOrWhiteSpace(user.UserName))
             {
-                return BadRequest("Blad! podaj jakas nazwe uzytkownika.");
+                return BadRequest("Blad! podaj nazwe uzytkownika.");
             }
 
             _context.Users.Add(user);

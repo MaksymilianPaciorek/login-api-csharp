@@ -1,18 +1,11 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace UserApi.Models
 {
-    public class User
-    {
-        public int Id { get; set; }
-        public required string Name { get; set; }
-    }
-
-    public class UserDbContext : DbContext
+    public class UserDbContext : IdentityDbContext<IdentityUser>
     {
         public UserDbContext(DbContextOptions<UserDbContext> options) : base(options) { }
-
-        public DbSet<User> Users { get; set; }
     }
 }
